@@ -22,6 +22,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "Components/search/SearchContainer.jsx", "Components/search/SearchFilters.jsx", "Components/search/SearchInput.jsx", "Components/search/SearchResultCard.jsx", "Components/search/SearchResultItem.jsx", "Components/search/SearchResults.jsx", "Pages/Search.jsx"],
   "exclude": ["node_modules"]
 }
