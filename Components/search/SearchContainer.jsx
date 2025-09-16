@@ -3,7 +3,7 @@ import React, { useState, useEffect, useRef, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Settings, Folder, Image, Play, User, MessageSquare, List as ListIcon, Link as LinkIcon} from 'lucide-react';
 import SearchResultItem from './SearchResultItem';
-import { i } from 'framer-motion/client';
+
 
 const ToggleSwitch = ({ checked, onChange }) => {
   return (
@@ -16,7 +16,7 @@ const ToggleSwitch = ({ checked, onChange }) => {
       <motion.div
         className="w-4 h-4 bg-white rounded-full"
         layout
-        transition={{ type: 'spring', stiffness: 700, damping: 30 }}
+        transition={{ type: 'spring', stiffness: 900, damping: 20 }}
       />
     </div>
   );
@@ -36,6 +36,7 @@ export default function SearchContainer({
     chats: true,
     lists: true,
   });
+  const [loading, setLoading] = useState(false);
   const settingsRef = useRef(null);
 
   const filteredItems = searchItems?.filter(item => {
@@ -155,17 +156,30 @@ export default function SearchContainer({
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [settingsRef]);
 
+  useEffect(() => {
+    setLoading(true);
+    const timer = setTimeout(() => setLoading(false), 300);
+    return () => clearTimeout(timer);
+  }, [searchTerm, activeTab, settings]);
+
   return (
     <motion.div className="w-full bg-white rounded-3xl shadow-xl overflow-hidden ">
       {/* Search Header */}
       <div className="p-6 pb-4">
         <div className="relative flex items-center">
-          <Search className="w-5 h-5 text-gray-400 absolute left-0" />
+        {loading ? (
+            <div className="absolute flex items-center justify-center">
+            <div className="w-5 h-5 border-2 border-t-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+            </div>
+          ) : (
+            <Search className="w-5 h-5 text-gray-400 absolute " />
+          )
+              }
           <input
             type="text"
             value={searchTerm}
             onChange={(e) => onSearchTermChange(e.target.value)}
-            className="flex-1 ml-8 bg-transparent text-lg text-gray-900 placeholder-gray-400 outline-none"
+            className="flex-1 ml-10 bg-transparent text-lg text-gray-900 placeholder-gray-400 outline-none"
             placeholder="Search for anything..."
             autoFocus={isInitialState}
           />
@@ -193,14 +207,14 @@ export default function SearchContainer({
           transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
         >
           {/* Tabs */}
-          <div className="px-6 pb-2">
+          <div className="px-8 pb-2">
             <div className="flex items-center justify-between">
               <div className="inline-flex flex-wrap md:flex space-x-6">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}
                     onClick={() => setActiveTab(tab.id)}
-                    className={`relative flex items-center space-x-2 pb-3 transition-colors ${
+                    className={`relative flex items-center space-x-2 pb-3 transition-colors cursor-pointer ${
                       activeTab === tab.id ? 'text-black' : 'text-gray-500'
                     }`}
                   >
@@ -211,7 +225,7 @@ export default function SearchContainer({
                     }`}>{tab.count}</span>
                     {activeTab === tab.id && (
                       <motion.div
-                        className="absolute bottom-0 left-0 right-0 h-0.5 bg-black"
+                        className="absolute bottom-0 left-0 right-0 h-1 bg-black/40 rounded-full"
                         layoutId="tabIndicator"
                       />
                     )}
@@ -221,9 +235,9 @@ export default function SearchContainer({
               <div className="relative" ref={settingsRef}>
                 <button
                   onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                  className="p-2 rounded-lg transition-colors cusror-pointer"
                 >
-                  <Settings className="w-5 h-5 text-gray-400" />
+                  <Settings className="w-5 h-5 text-gray-400 hover:text-gray-900 " />
                 </button>
                 <AnimatePresence>
                   {isSettingsOpen && (
