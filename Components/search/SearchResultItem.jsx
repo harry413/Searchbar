@@ -14,7 +14,7 @@ export default function SearchResultItem({ item, getItemIcon }) {
 
   return (
     <motion.div
-      className="flex items-center p-3 hover:bg-gray-50 rounded-xl cursor-pointer transition-colors relative"
+      className="flex items-center p-3 hover:bg-gray-50/20 rounded-xl cursor-pointer transition-colors relative"
       initial={{ opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       whileHover={{ x: 2 }}
@@ -23,10 +23,10 @@ export default function SearchResultItem({ item, getItemIcon }) {
     >
       {loading ? (
         <div className="w-full flex items-center space-x-4">
-        <div className="w-10 h-10 bg-gray-300 rounded-full animate-pulse" />
+        <div className="w-10 h-10 bg-gray-200/40 rounded-full animate-pulse" />
         <div className="flex-1 space-y-2 py-1">
-          <div className="h-4 bg-gray-300 rounded w-3/4 animate-pulse" />
-          <div className="h-3 bg-gray-300 rounded w-1/2 animate-pulse" />
+          <div className="h-4 bg-gray-200/40 rounded w-3/4 animate-pulse" />
+          <div className="h-3 bg-gray-200/40 rounded w-1/2 animate-pulse" />
         </div>
         </div>
       ) : (
@@ -71,10 +71,10 @@ export default function SearchResultItem({ item, getItemIcon }) {
             exit={{ opacity: 0, x: 10 }}
             transition={{ duration: 0.2 }}
           >
-            <button className="p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+            <button className="p-2 rounded-lg hover:bg-gray-300/20 transition-colors cursor-pointer">
               <Link className="w-4 h-4 text-gray-600" />
             </button>
-            <button className="flex items-center p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
+            <button className="flex items-center p-2 rounded-lg hover:bg-gray-300/20 transition-colors cursor-pointer">
               <p className="text-sm text-gray-600">New Tab</p>
               <ArrowUpRight className="w-4 h-4 text-gray-600" />
             </button>

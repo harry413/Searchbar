@@ -163,16 +163,16 @@ export default function SearchContainer({
   }, [searchTerm, activeTab, settings]);
 
   return (
-    <motion.div className="w-full bg-white rounded-3xl shadow-xl overflow-hidden ">
+    <motion.div className="w-full bg-white/20 rounded-3xl shadow-xl overflow-hidden relative ">
       {/* Search Header */}
       <div className="p-6 pb-4">
         <div className="relative flex items-center">
         {loading ? (
             <div className="absolute flex items-center justify-center">
-            <div className="w-5 h-5 border-2 border-t-2 border-gray-300 border-t-gray-600 rounded-full animate-spin"></div>
+            <div className="w-5 h-5 border-2 border-t-2 border-gray-700 border-t-gray-300 rounded-full animate-spin"></div>
             </div>
           ) : (
-            <Search className="w-5 h-5 text-gray-400 absolute " />
+            <Search className="w-5 h-5 text-gray-600 absolute " />
           )
               }
           <input
