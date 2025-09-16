@@ -17,7 +17,6 @@ export default function Search() {
       setSearchItems(Items || []);
     } catch (error) {
       console.error('Error loading search items:', error);
-      // Fallback data if entity fetch fails
       setSearchItems([]);
     }
   };

@@ -3,7 +3,6 @@ import React, { useState, useEffect, useRef, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, Settings, Folder, Image, Play, User, MessageSquare, List as ListIcon, Link as LinkIcon, ArrowUpRight } from 'lucide-react';
 import SearchResultItem from './SearchResultItem';
-import { i } from 'framer-motion/client';
 
 const ToggleSwitch = ({ checked, onChange }) => {
   return (
