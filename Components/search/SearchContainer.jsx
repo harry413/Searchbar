@@ -1,8 +1,9 @@
 'use client';
 import React, { useState, useEffect, useRef, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Search, X, Settings, Folder, Image, Play, User, MessageSquare, List as ListIcon, Link as LinkIcon, ArrowUpRight } from 'lucide-react';
+import { Search, Settings, Folder, Image, Play, User, MessageSquare, List as ListIcon, Link as LinkIcon} from 'lucide-react';
 import SearchResultItem from './SearchResultItem';
+import { i } from 'framer-motion/client';
 
 const ToggleSwitch = ({ checked, onChange }) => {
   return (
@@ -32,8 +33,8 @@ export default function SearchContainer({
   const [settings, setSettings] = useState({
     files: true,
     people: true,
-    chats: false,
-    lists: false,
+    chats: true,
+    lists: true,
   });
   const settingsRef = useRef(null);
 
@@ -44,10 +45,14 @@ export default function SearchContainer({
 
     if (!settings.files && (item.type === 'file' || item.type === 'folder')) return false;
     if (!settings.people && item.type === 'person') return false;
+    if (!settings.chats && item.type === 'chat') return false;
+    if (!settings.lists && item.type === 'list') return false;
 
     if (activeTab === 'all') return true;
     if (activeTab === 'files') return item.type === 'file' || item.type === 'folder';
     if (activeTab === 'people') return item.type === 'person';
+    if (activeTab === 'chats') return item.type === 'chat';
+    if (activeTab === 'lists') return item.type === 'list';
     return true;
   });
 
@@ -58,6 +63,8 @@ export default function SearchContainer({
       if (type === 'all') return true;
       if (type === 'files') return item.type === 'file' || item.type === 'folder';
       if (type === 'people') return item.type === 'person';
+      if (type === 'chats') return item.type === 'chat';
+      if (type === 'lists') return item.type === 'list';
       return false;
     }).length;
   };
@@ -65,6 +72,8 @@ export default function SearchContainer({
   const allCount = getFilteredCount('all');
   const filesCount = getFilteredCount('files');
   const peopleCount = getFilteredCount('people');
+  const chatsCount = getFilteredCount('chats');
+  const listsCount = getFilteredCount('lists');
 
   const clearSearch = () => {
     onSearchTermChange('');
@@ -89,6 +98,20 @@ export default function SearchContainer({
       return (
         <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center">
           <Folder className="w-5 h-5 text-gray-600" />
+        </div>
+      );
+    }
+    if (item.type === 'chat') {
+      return (
+        <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
+          <MessageSquare className="w-5 h-5 text-blue-600" />
+        </div>
+      );
+    }
+    if (item.type === 'list') {
+      return (
+        <div className="w-10 h-10 rounded-lg bg-green-100 flex items-center justify-center">
+          <ListIcon className="w-5 h-5 text-green-600" />
         </div>
       );
     }
@@ -117,7 +140,9 @@ export default function SearchContainer({
   const tabs = [
     { id: 'all', label: 'All', count: allCount },
     { id: 'files', label: 'Files', icon: LinkIcon, count: filesCount },
-    { id: 'people', label: 'People', icon: User, count: peopleCount }
+    { id: 'people', label: 'People', icon: User, count: peopleCount },
+    { id: 'chats', label: 'Chats', icon: MessageSquare, count: chatsCount },
+    { id: 'lists', label: 'Lists', icon: ListIcon, count: listsCount },
   ];
 
   useEffect(() => {
@@ -131,7 +156,7 @@ export default function SearchContainer({
   }, [settingsRef]);
 
   return (
-    <motion.div className="w-full bg-white rounded-3xl shadow-xl overflow-hidden">
+    <motion.div className="w-full bg-white rounded-3xl shadow-xl overflow-hidden ">
       {/* Search Header */}
       <div className="p-6 pb-4">
         <div className="relative flex items-center">
@@ -141,7 +166,7 @@ export default function SearchContainer({
             value={searchTerm}
             onChange={(e) => onSearchTermChange(e.target.value)}
             className="flex-1 ml-8 bg-transparent text-lg text-gray-900 placeholder-gray-400 outline-none"
-            placeholder="Search"
+            placeholder="Search for anything..."
             autoFocus={isInitialState}
           />
           {searchTerm && !isInitialState && (
@@ -155,7 +180,7 @@ export default function SearchContainer({
           {isInitialState && (
            <div className='flex gap-4 items-center text-gray-600 cursor-pointer'>
             <p className='border rounded-lg shadow-md px-2'>s</p>
-            <p>Easy Access</p>
+            <p className='hidden md:flex'>Easy Access</p>
            </div>
           )}
         </div>
@@ -170,7 +195,7 @@ export default function SearchContainer({
           {/* Tabs */}
           <div className="px-6 pb-2">
             <div className="flex items-center justify-between">
-              <div className="flex space-x-6">
+              <div className="inline-flex flex-wrap md:flex space-x-6">
                 {tabs.map((tab) => (
                   <button
                     key={tab.id}

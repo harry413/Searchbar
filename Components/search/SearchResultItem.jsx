@@ -51,10 +51,10 @@ export default function SearchResultItem({ item, getItemIcon }) {
             exit={{ opacity: 0, x: 10 }}
             transition={{ duration: 0.2 }}
           >
-            <button className="p-2 rounded-lg hover:bg-gray-200 transition-colors">
+            <button className="p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
               <Link className="w-4 h-4 text-gray-600" />
             </button>
-            <button className="flex items-center space-x-1.5 p-2 rounded-lg hover:bg-gray-200 transition-colors">
+            <button className="flex items-center space-x-1.5 p-2 rounded-lg hover:bg-gray-200 transition-colors cursor-pointer">
               <span className="text-sm text-gray-600">New Tab</span>
               <ArrowUpRight className="w-4 h-4 text-gray-600" />
             </button>
