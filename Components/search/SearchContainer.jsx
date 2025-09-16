@@ -3,19 +3,20 @@ import React, { useState, useEffect, useRef, use } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, X, Settings, Folder, Image, Play, User, MessageSquare, List as ListIcon, Link as LinkIcon, ArrowUpRight } from 'lucide-react';
 import SearchResultItem from './SearchResultItem';
+import { i } from 'framer-motion/client';
 
 const ToggleSwitch = ({ checked, onChange }) => {
   return (
     <div
       onClick={onChange}
       className={`w-9 h-5 flex items-center rounded-full p-0.5 cursor-pointer transition-colors ${
-        checked ? 'bg-black' : 'bg-gray-200'
+        checked ? 'bg-black flex items-end justify-end' : 'bg-gray-200'
       }`}
     >
       <motion.div
         className="w-4 h-4 bg-white rounded-full"
         layout
-      
+        transition={{ type: 'spring', stiffness: 700, damping: 30 }}
       />
     </div>
   );
@@ -68,6 +69,9 @@ export default function SearchContainer({
 
   const clearSearch = () => {
     onSearchTermChange('');
+    if (isInitialState) {
+      setActiveTab('all');
+    }
   };
 
   const getItemIcon = (item) => {

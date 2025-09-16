@@ -13,10 +13,7 @@ export default function Search() {
   }, []);
 
   const loadSearchItems = async () => {
-    try {
-      const items = await Items?.name;
-      console.log('Fetched search items:', Items);
-      
+    try {      
       setSearchItems(Items || []);
     } catch (error) {
       console.error('Error loading search items:', error);
@@ -27,9 +24,9 @@ export default function Search() {
 
   const handleSearchTermChange = (newTerm) => {
     setSearchTerm(newTerm);
-    if (newTerm.length > 2 && !isSearchActive) {
+    if (newTerm.length > 0 && !isSearchActive) {
       setIsSearchActive(true);
-    } else if (newTerm.length === 2 && isSearchActive) {
+    } else if (newTerm.length === 0 && isSearchActive) {
       setIsSearchActive(false);
     }
   };
