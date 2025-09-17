@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import Items from '../Entities/SearchItem';
 import SearchContainer from '../Components/search/SearchContainer';
 
@@ -34,16 +34,29 @@ export default function Search() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-[#bbbdc7] via-[#bbbdc7] to-[#d47a2c] relative overflow-hidden" >
       <motion.div 
-        initial={{ opacity: 0,  x: -1000, y: -1000 }}
-        animate={{ opacity: 1, x: 1500, y: 1500 }}
-        transition={{ duration: 5.5, scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+        initial={{ opacity: 0,  x: 800, y: 200 }}
+        animate={{ opacity: 1, x: -800, y: 200 }}
+        transition={{ duration: 5.5, scale: { type: "inertia", visualDuration: 0.4, bounce: 0.5 },
         repeat: Infinity, repeatType: "reverse"
       }}
       className="absolute bg-white/30 backdrop-blur-2xl h-80 w-80 pointer-events-none rounded-full shadow-lg "/>
+      <motion.div 
+        initial={{ opacity: 0,  x: -800, y: -300 }}
+        animate={{ opacity: 1, x: 800, y: 100 }}
+        transition={{ duration: 5.5, scale: { type: "tween", visualDuration: 0.4, bounce: 0.5 },
+        repeat: Infinity, repeatType: "reverse"
+      }}
+      className="absolute bg-white/30 backdrop-blur-2xl h-40 w-40 pointer-events-none rounded-full shadow-lg "/>
         {!isSearchActive ? (
-          <div
+          <AnimatePresence>
+          <motion.div
             key="initial-search"
             className="w-full max-w-2xl z-20"
+            initial={{ opacity: 0, x: -800 , y: 200 , scale: 0.8 , rotate: 10 }}
+            animate={{ opacity: 1, x: 0 , y: 0 , scale: 1 , rotate: 0, transition: { duration: 0.5 } }}
+              transition={{ duration: 5.5, scale: { type: "spring", visualDuration: 0.4, bounce: 0.5 },
+        repeat: Infinity, repeatType: "reverse"}}
+            exit={{ opacity: 0, x: 800 , y: 200 , scale: 0.8 , rotate: 10, transition: { duration: 1.5 } }} 
           >
             <SearchContainer
               searchItems={[]}
@@ -51,11 +64,16 @@ export default function Search() {
               onSearchTermChange={handleSearchTermChange}
               isInitialState={true}
             />
-          </div>
+          </motion.div>
+          </AnimatePresence>
         ) : (
-          <div
+          <AnimatePresence>
+          <motion.div
             key="initial-search"
             className="w-full max-w-2xl z-20"
+            initial={{ opacity: 0, x: -800 , y: 200 , scale: 0.8 , rotate: 10 }}
+            animate={{ opacity: 1, x: 0 , y: 0 , scale: 1 , rotate: 0, transition: { duration: 0.5 } }}
+            exit={{ opacity: 0, x: 800 , y: 200 , scale: 0.8 , rotate: 10, transition: { duration: 0.5 } }}
           >
             <SearchContainer
               searchItems={searchItems}
@@ -63,7 +81,8 @@ export default function Search() {
               onSearchTermChange={handleSearchTermChange}
               isInitialState={false}
             />
-          </div>
+          </motion.div>
+          </AnimatePresence>
         )}
     </div>
   );

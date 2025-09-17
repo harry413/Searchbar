@@ -207,7 +207,7 @@ export default function SearchContainer({
           transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
         >
           {/* Tabs */}
-          <div className="px-8 pb-2">
+          <div className="px-6 pb-2">
             <div className="flex items-center justify-between">
               <div className="inline-flex flex-wrap md:flex space-x-6">
                 {tabs.map((tab) => (
@@ -235,9 +235,9 @@ export default function SearchContainer({
               <div className="relative" ref={settingsRef}>
                 <button
                   onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-                  className="p-2 rounded-lg transition-colors cusror-pointer"
+                  className="p-2 rounded-lg transition-colors"
                 >
-                  <Settings className="w-5 h-5 text-gray-400 hover:text-gray-900 " />
+                  <Settings className="w-6 h-6 text-gray-400 hover:text-gray-900 cursor-pointer " />
                 </button>
                 <AnimatePresence>
                   {isSettingsOpen && (
@@ -275,8 +275,8 @@ export default function SearchContainer({
           </div>
 
           {/* Search Results */}
-          <div className="px-6 pb-6" style={{ minHeight: '300px' }}>
-            <div className="space-y-1">
+          <div className="px-6 pb-6" style={{ minHeight: '200px' }}>
+            <div className="space-y-1 max-h-96 overflow-y-scroll overflow-x-hidden ">
               {filteredItems.map((item, index) => (
                 <SearchResultItem key={item.id || index} item={item} getItemIcon={getItemIcon} />
               ))}
