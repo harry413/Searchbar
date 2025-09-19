@@ -276,7 +276,7 @@ export default function SearchContainer({
 
           {/* Search Results */}
           <div className="px-6 pb-6" style={{ minHeight: '300px' }}>
-            <div className="space-y-1 max-h-96 overflow-y-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300/80 scrollbar-track-transparent ">
+            <div className="space-y-1 max-h-96 overflow-y-auto overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-300/80 scrollbar-track-transparent ">
               {filteredItems.map((item, index) => (
                 <SearchResultItem key={item.id || index} item={item} getItemIcon={getItemIcon} />
               ))}
